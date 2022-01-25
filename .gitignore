@@ -1,0 +1,5 @@
+tools/sqlite
+venv
+my_wallet_app/db.sqlite3
+**/__pycache__
+.idea
