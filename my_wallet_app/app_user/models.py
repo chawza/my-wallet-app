@@ -9,5 +9,5 @@ class User(models.Model):
 
 
 class UserAccount(models.Model):
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
