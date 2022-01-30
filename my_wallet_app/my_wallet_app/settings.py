@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.UserAuthorization.UserAuthorizationMiddleware'
 ]
 
 ROOT_URLCONF = 'my_wallet_app.urls'

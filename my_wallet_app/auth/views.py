@@ -16,13 +16,6 @@ def _get_rsa_private_key():
     return private_key.decode()
 
 
-def _get_rsa_public_key():
-    filepath = 'rsa_public.pem'
-    with open(filepath, 'rb') as file:
-        public_key = file.read()
-    return public_key.decode()
-
-
 def _create_jwt_token(username: str, user_id: int):
     signed_key = _get_rsa_private_key()
     message = {
@@ -31,12 +24,6 @@ def _create_jwt_token(username: str, user_id: int):
     }
     token = jwt.encode(message, signed_key, "RS256")
     return token
-
-
-def _verify_jwt_token(token: str):
-    public_key = _get_rsa_public_key()
-    payload = jwt.decode(token, public_key, ["RS256"])
-    return payload
 
 
 # Create your views here.
@@ -56,14 +43,3 @@ def user_login(req: HttpRequest):
         return response.HttpResponseBadRequest(json.dumps({"message": "username or password is invalid"}))
 
     return response.HttpResponseBadRequest(json.dumps({"message": "request method Error"}))
-
-
-def verify_jwt(req: HttpRequest):
-    if req.method == "POST":
-        body = json.loads(req.body)
-        token = body['token']
-        message = _verify_jwt_token(token)
-        return response.HttpResponse(json.dumps(message))
-
-    return response.HttpResponseBadRequest('Unknown request method')
-
