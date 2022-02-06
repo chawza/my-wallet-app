@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'app_user',
-    'transactions',
+    'authentication',
+    'wallet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

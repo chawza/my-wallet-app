@@ -1,4 +1,3 @@
-import json
 from datetime import datetime, timedelta
 from dateutil import parser
 
@@ -10,7 +9,7 @@ from app_user.models import UserAccount
 
 
 def _parse_to_datetime(timestamp: str) -> datetime:
-    return parser.parse(timestamp)
+    return parser.parse(timestamp, ignoretz=True)
 
 
 def _calculate_time_range(params):

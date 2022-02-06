@@ -1,6 +1,6 @@
 from django.db import models
 from django.apps import apps
-from transactions.models import Transactions
+from wallet.models import Transactions
 
 
 # Create your models here.

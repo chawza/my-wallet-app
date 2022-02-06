@@ -43,8 +43,8 @@ def insert_transaction_to_account(row: pd.Series, account_id: int):
     is_transfer = row['transfer']
     account_id_id = account_id
 
-    query = 'INSERT INTO transactions_transactions ' \
-            '(category, currency, amount, type, note, date, is_transfer, account_id_id) ' \
+    query = 'INSERT INTO wallet_transactions ' \
+            '(category, currency, amount, type, note, date, is_transfer, account_id) ' \
             f'values("{category}", "{currency}", "{amount}", "{tran_type}", ' \
             f'"{note}", "{date}", "{is_transfer}", "{account_id_id}")'
     conn.execute(query)

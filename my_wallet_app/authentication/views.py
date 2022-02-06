@@ -1,5 +1,4 @@
 import json
-# from django.shortcuts import render
 import jwt
 from django.http.request import HttpRequest
 from django.http import response
