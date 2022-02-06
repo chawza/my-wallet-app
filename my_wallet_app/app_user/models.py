@@ -1,6 +1,7 @@
 from django.db import models
-from django.apps import apps
-from wallet.models import Transactions
+from wallet.models import UserAccount
+# from django.apps import apps
+# UserAccount = apps.get_model('wallet', 'UserAccount')
 
 
 # Create your models here.
@@ -17,8 +18,3 @@ class User(models.Model):
 
     def get_all_accounts(self):
         return UserAccount.objects.filter(user_id=self.id)
-
-
-class UserAccount(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=256)
