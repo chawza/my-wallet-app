@@ -18,13 +18,13 @@ def get_account_list(table: pd.DataFrame):
 
 def populate_user_accounts(account_list: List[str]):
     for account in account_list:
-        query = f'INSERT INTO app_user_useraccount(name, user_id_id) VALUES("{account}", "{user_id}")'
+        query = f'INSERT INTO wallet_useraccount(name, user_id) VALUES("{account}", "{user_id}")'
         conn.execute(query)
     conn.commit()
 
 
 def find_account_by_name(name):
-    query = f'SELECT * FROM app_user_useraccount WHERE name == "{name}"'
+    query = f'SELECT * FROM wallet_useraccount WHERE name == "{name}"'
     account = conn.execute(query).fetchall()[0]
     return {
         "id": account[0],
@@ -72,12 +72,12 @@ def populate_transactions(account_list: List[str]):
     print('Transactions committed')
 
 
-# Find user's id
-find_user_query = "SELECT id from app_user_user"
-user_id = conn.execute(find_user_query).fetchall()[0][0]
+if __name__ == '__main__':
+    # Find user's id
+    find_user_query = "SELECT id from app_user_user"
+    user_id = conn.execute(find_user_query).fetchall()[0][0]
 
-# create user accounts
-accounts = get_account_list(transactions)
-print(accounts)
-# populate_user_accounts(accounts)
-populate_transactions(accounts)
+    # create user accounts
+    accounts = get_account_list(transactions)
+    populate_user_accounts(accounts)
+    populate_transactions(accounts)
