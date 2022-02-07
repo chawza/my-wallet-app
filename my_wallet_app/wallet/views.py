@@ -71,3 +71,21 @@ def get_user_account_endpoint(request: HttpRequest):
             return response.HttpResponseBadRequest(error)
 
     return response.HttpResponseBadRequest('Invalid Method')
+
+
+def user_profile(request: HttpRequest):
+    if request.method == 'GET':
+        try:
+            user = request.user
+            return response.JsonResponse({
+                "profile": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email
+                }
+            })
+
+        except Exception as error:
+            return response.HttpResponseBadRequest(error)
+
+    return response.HttpResponseBadRequest('Invalid Method')
