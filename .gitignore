@@ -5,3 +5,4 @@ my_wallet_app/db.sqlite3
 .idea
 
 **.pem
+my_wallet_app/.env
