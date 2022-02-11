@@ -16,12 +16,12 @@ def _parse_to_datetime(timestamp: str) -> datetime:
 def _calculate_time_range(params):
     today = datetime.now(timezone.utc)
     if 'start_date' in params:
-        start_date = _parse_to_datetime(params.get('start_date'))
+        start_date = _parse_to_datetime(params.get('start_date').replace('"', ''))
     else:
         start_date = today - timedelta(days=30)
 
     if 'end_date' in params:
-        end_date = _parse_to_datetime(params.get('end_date'))
+        end_date = _parse_to_datetime(params.get('end_date').replace('"', ''))
     else:
         end_date = today
 
