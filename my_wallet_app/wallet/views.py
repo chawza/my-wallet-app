@@ -7,6 +7,7 @@ from django.http import response
 
 from .models import Transactions
 from app_user.models import UserAccount
+from .forms import TransactionForm
 
 
 def _parse_to_datetime(timestamp: str) -> datetime:
@@ -30,7 +31,7 @@ def _calculate_time_range(params):
     return start_date, end_date
 
 
-def get_all_user_transactions(request: HttpRequest):
+def transactions(request: HttpRequest):
     if request.method == 'GET':
         try:
             start_date, end_date = _calculate_time_range(request.GET)
@@ -52,8 +53,12 @@ def get_all_user_transactions(request: HttpRequest):
         except parser.ParserError:
             return response.HttpResponseBadRequest('Cannot parse datetime parameter(s)')
 
-        except Exception as error:
-            return response.HttpResponseBadRequest(error)
+    if request.method == 'POST':
+        tran = TransactionForm(request.GET)
+        if tran.is_valid():
+            tran.save()
+            return response.HttpResponse('Record Added')
+        return response.HttpResponseBadRequest(tran.errors.as_json())
 
     return response.HttpResponseBadRequest('Invalid Method')
 

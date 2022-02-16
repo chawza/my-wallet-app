@@ -9,9 +9,9 @@ class UserAccount(models.Model):
 class Transactions(models.Model):
     account = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     category = models.CharField(max_length=256)
-    currency = models.CharField(max_length=256)
+    currency = models.CharField(max_length=256, default='IDR')
     amount = models.IntegerField()
     type = models.CharField(max_length=256)
-    note = models.TextField()
+    note = models.TextField(default='')
     date = models.DateTimeField()
     is_transfer = models.BooleanField(default=False)
