@@ -6,3 +6,4 @@ my_wallet_app/db.sqlite3
 
 **.pem
 my_wallet_app/.env
+.env

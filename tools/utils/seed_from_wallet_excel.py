@@ -1,14 +1,24 @@
+from dotenv import load_dotenv
+import os
 import sqlite3
 from typing import List
-
 import pandas as pd
 import numpy as np
+import sys
+from dateutil.parser import parse
 
+load_dotenv('tools/utils/.env')
 DB_CONN_PATH = 'my_wallet_app/db.sqlite3'
-excel_path = "C:/Users/Nabeel/OneDrive/Documents/finance records/Wallet Rep Aug 2019 4 Dec 2021.xls"
+excel_path = os.environ.get('transactions_file_path')
+csv_path = os.environ.get('csv_file_path')
+print('excel_path', excel_path)
 user_name = 'nabeel'
 
-transactions = pd.read_excel(excel_path)
+if '--csv' in sys.argv:
+    transactions = pd.read_csv(csv_path, sep=';')
+else:
+    transactions = pd.read_excel(excel_path)
+
 conn = sqlite3.connect(DB_CONN_PATH)
 
 
@@ -36,17 +46,16 @@ def find_account_by_name(name):
 def insert_transaction_to_account(row: pd.Series, account_id: int):
     category = row['category']
     currency = row['currency']
-    amount = row['amount']
+    amount = int(row['amount'])
     tran_type = row['type']
     note = 'NULL' if (row['note'] is np.nan) else row['note']
     date = row['date']
-    is_transfer = row['transfer']
-    account_id_id = account_id
+    is_transfer = bool(row['transfer'])
 
     query = 'INSERT INTO wallet_transactions ' \
             '(category, currency, amount, type, note, date, is_transfer, account_id) ' \
             f'values("{category}", "{currency}", "{amount}", "{tran_type}", ' \
-            f'"{note}", "{date}", "{is_transfer}", "{account_id_id}")'
+            f'"{note}", "{date}", "{is_transfer}", "{account_id}")'
     conn.execute(query)
 
 
@@ -79,5 +88,5 @@ if __name__ == '__main__':
 
     # create user accounts
     accounts = get_account_list(transactions)
-    populate_user_accounts(accounts)
+    # populate_user_accounts(accounts)
     populate_transactions(accounts)
